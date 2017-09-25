@@ -1,0 +1,21 @@
+{
+    "name": "awl/php-utils",
+    "description": "Andrew's PHP utils",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrew Longosz",
+            "email": "andrew@longosz.net"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Awl\\Helper\\": "src/Helper"
+        }
+    },
+    "require": {
+        "symfony/console": "^3.3",
+        "doctrine/dbal": "^2.6"
+    }
+}
