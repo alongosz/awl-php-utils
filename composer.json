@@ -15,8 +15,14 @@
         }
     },
     "require": {
-        "symfony/console": "^3.3",
-        "ezsystems/ezpublish-kernel": "^6.7 || ^7.0",
-        "doctrine/dbal": "^2.6"
+        "php": "^7.3",
+        "symfony/console": "^5.0",
+        "ezsystems/ezplatform-kernel": "^1.0",
+        "doctrine/dbal": "^2.10.2"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2.x-dev"
+        }
     }
 }
