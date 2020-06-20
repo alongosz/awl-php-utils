@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Awl\Helper\Database;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\FetchMode;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -20,10 +22,9 @@ class TableConsoleOutputAdapter
     }
 
     /**
-     * @param string $table db table name
      * @param array $predicates
      */
-    public function display($table, array $predicates = [])
+    public function display(string $table, array $predicates = []): void
     {
         $query = $this->connection->createQueryBuilder();
         $query
@@ -39,18 +40,25 @@ class TableConsoleOutputAdapter
         }
 
         $stmt = $query->execute();
-        $data = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        $data = $stmt->fetchAll(FetchMode::ASSOCIATIVE);
         if (empty($data)) {
             echo "$table is empty", PHP_EOL;
             return;
         }
 
-        $table = new Table(
-            new ConsoleOutput()
-        );
+        $this->displayTable($data);
+    }
+
+    /**
+     * Renders the given rows to STDOUT. Input array is expected to be zero-based,
+     * multidimensional with header names as associative keys in each row.
+     */
+    public function displayTable(array $rows): void
+    {
+        $table = new Table(new ConsoleOutput());
         $table
-            ->setHeaders(array_keys($data[0]))
-            ->setRows($data)
+            ->setHeaders(array_keys($rows[0]))
+            ->setRows($rows)
         ;
         $table->render();
     }
